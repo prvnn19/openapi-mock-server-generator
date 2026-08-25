@@ -1,0 +1,38 @@
+@startuml
+left to right direction
+
+actor "API Developer" as Developer
+actor "QA Engineer" as QA
+
+rectangle "OpenAPI Mock Server Generator" {
+    usecase "Upload OpenAPI\nSpecification" as UC1
+    usecase "Parse OpenAPI\nSpecification" as UC2
+    usecase "Generate Mock\nEndpoints" as UC3
+    usecase "Configure\nResponse Latency" as UC4
+    usecase "Send API Request" as UC5
+    usecase "Validate API\nRequest" as UC6
+    usecase "Generate Randomized\nJSON Response" as UC7
+    usecase "Validate Response\nSchema" as UC8
+    usecase "View API Response" as UC9
+    usecase "Handle Invalid\nRequest" as UC10
+}
+
+Developer --> UC1
+Developer --> UC3
+Developer --> UC4
+Developer --> UC5
+Developer --> UC9
+
+QA --> UC5
+QA --> UC8
+QA --> UC9
+QA --> UC4
+
+UC1 --> UC2 : <<include>>
+UC3 --> UC7 : <<include>>
+UC5 --> UC6 : <<include>>
+UC5 --> UC7 : <<include>>
+UC7 --> UC8 : <<include>>
+
+UC10 ..> UC5 : <<extend>>
+@enduml
